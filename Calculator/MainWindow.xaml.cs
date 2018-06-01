@@ -62,7 +62,7 @@ namespace Calculator
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
-
+        
             Op = "+";
 
             if (checker == 0)
