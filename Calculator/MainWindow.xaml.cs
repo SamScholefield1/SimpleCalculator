@@ -24,6 +24,7 @@ namespace Calculator
         private int value1;
         private int value2;
         private string Op;
+        //test
         private int checker = 0;
 
         public MainWindow()
