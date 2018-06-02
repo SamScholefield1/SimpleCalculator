@@ -23,7 +23,7 @@ namespace Calculator
 
         private float value1;
         private float value2;
-        private string Op;
+        private string Op = "";
         //test
         private int checker = 0;
         private int secondChecker = 0;
@@ -75,8 +75,16 @@ namespace Calculator
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
-            Op = Convert.ToString(((FrameworkElement)sender).Tag);
-            calculation();
+            if(Op == "")
+            {
+                Op = Convert.ToString(((FrameworkElement)sender).Tag);
+                calculation();
+            } else
+            {
+                calculation();
+                Op = Convert.ToString(((FrameworkElement)sender).Tag);
+            }
+
         }
 
         private void calculation()
@@ -99,7 +107,7 @@ namespace Calculator
                 }
                 else
                 {
-                    value2 = Convert.ToInt32(textField.Text);
+                    value2 = float.Parse(textField.Text);
                     if (Op == "+")
                     {
                         value1 = value1 + value2;
