@@ -21,8 +21,8 @@ namespace Calculator
     public partial class MainWindow : Window
     {
 
-        private int value1;
-        private int value2;
+        private float value1;
+        private float value2;
         private string Op;
         //test
         private int checker = 0;
@@ -52,14 +52,25 @@ namespace Calculator
             string buttonNumberText = Convert.ToString(((FrameworkElement)sender).Tag);
             AddDigit(buttonNumberText);
             
+            if(checker == 1 && secondChecker == 1)
+            {
+                calculation();
+            }
+
         }
 
         private void buttonClear_Click(object sender, RoutedEventArgs e)
         {
             textField.Text = "0";
+            textCalculations.Text = "";
             value1 = 0;
             value2 = 0;
             checker = 0;
+        }
+
+        private void buttonClearEntry_Click(object sender, RoutedEventArgs e)
+        {
+            textField.Text = "0";
         }
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
@@ -75,9 +86,10 @@ namespace Calculator
 
             if (checker == 0)
             {
-                value1 = Convert.ToInt32(textField.Text);
+                value1 = float.Parse(textField.Text);
                 textField.Text = "0";
                 checker = 1;
+                textCalculations.Text = value1.ToString();
             }
             else if (checker == 1)
             {
@@ -94,37 +106,27 @@ namespace Calculator
                     } else if (Op == "-")
                     {
                         value1 = value1 - value2;
-
+                    } else if (Op == "*")
+                    {
+                        value1 = value1 * value2;
+                    } else if (Op == "/")
+                    {
+                        value1 = value1 / value2;
                     }
 
 
                     textField.Text = "0";
-                    checker = 0;
+                    textCalculations.Text += " " + Op + " " + value2;
+                   // checker = 0;
                 }
-            }
+            } 
         }
 
         private void buttonEquals_Click(object sender, RoutedEventArgs e)
         {
+            secondChecker = 1;          
+            calculation();
             checker = 0;
-
-            if(secondChecker == 0)
-            {
-                value2 = Convert.ToInt32(textField.Text);
-                secondChecker = 1;
-            } else
-            {
-                value2 = 0;
-            }
-
-            if (Op == "+")
-            {
-                value1 = value1 + value2;
-            } else if (Op == "-")
-            {
-                value1 = value1 - value2;
-            }
-
 
             textField.Text = value1.ToString();
         }
