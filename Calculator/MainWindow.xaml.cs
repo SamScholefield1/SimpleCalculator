@@ -26,6 +26,7 @@ namespace Calculator
         private string Op;
         //test
         private int checker = 0;
+        private int secondChecker = 0;
 
         public MainWindow()
         {
@@ -63,59 +64,69 @@ namespace Calculator
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
-        
-            Op = "+";
+            Op = Convert.ToString(((FrameworkElement)sender).Tag);
+            calculation();
+        }
+
+        private void calculation()
+        {
+            secondChecker = 0;
+
 
             if (checker == 0)
             {
-                storeNumbers.Add(Convert.ToInt32(textField.Text));
+                value1 = Convert.ToInt32(textField.Text);
                 textField.Text = "0";
                 checker = 1;
             }
             else if (checker == 1)
             {
-                if(textField.Text == "0")
+                if (textField.Text == "0")
                 {
 
                 }
                 else
                 {
-                    int finalValue = 0;
-                    storeNumbers.Add(Convert.ToInt32(textField.Text));
-
-                    foreach (int value in storeNumbers)
+                    value2 = Convert.ToInt32(textField.Text);
+                    if (Op == "+")
                     {
-                        finalValue = finalValue + value;
+                        value1 = value1 + value2;
+                    } else if (Op == "-")
+                    {
+                        value1 = value1 - value2;
+
                     }
 
+
                     textField.Text = "0";
-                    storeNumbers.Clear();
-                    storeNumbers.Add(finalValue);
                     checker = 0;
                 }
-               
             }
-           
         }
 
         private void buttonEquals_Click(object sender, RoutedEventArgs e)
         {
-            int finalValue = 0;
+            checker = 0;
+
+            if(secondChecker == 0)
+            {
+                value2 = Convert.ToInt32(textField.Text);
+                secondChecker = 1;
+            } else
+            {
+                value2 = 0;
+            }
 
             if (Op == "+")
             {
-                storeNumbers.Add(Convert.ToInt32(textField.Text));
-
-                foreach (int value in storeNumbers)
-                {
-                    finalValue = finalValue + value;
-                }
+                value1 = value1 + value2;
+            } else if (Op == "-")
+            {
+                value1 = value1 - value2;
             }
 
 
-            textField.Text = finalValue.ToString();
-            storeNumbers.Clear();
-            storeNumbers.Add(finalValue);
+            textField.Text = value1.ToString();
         }
     }
 }
